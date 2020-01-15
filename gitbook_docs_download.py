@@ -117,7 +117,7 @@ def save_to_file(file, path):
                 file = re.sub(r, "https://" + host + "/_imgs/" + img_name, file)
         # 替换错误的地址
         file = re.sub('/_imgs/_imgs', "/_imgs", file)
-	    # 直接打开而不走路由
+	# 直接打开而不走路由
         file = re.sub('<head>', '<head><script>window.addEventListener("click",function(e){var t=e.target.closest(\'a[class*="card"]\')||e.target.closest(\'a[class*="navButton"]\')||e.target.closest(\'a[class*="link"]\')||null;if(t!==null){window.location.href=t.href}},false); </script>', file)
         html.write(file)
     print('Saved {0}index.html').format(path)
