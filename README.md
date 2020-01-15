@@ -27,9 +27,9 @@
 
 #### 问题三、各种图片加载很慢
 >   图片一般来说有两类:<br>
->   一是页面中以"https://blobscdn.gitbook.com/v0/b/"开头的，<br>
+>   一是页面中以 "https://blobscdn.gitbook.com/v0/b/" 开头的，<br>
 >   此类图片只需要缓存到本地，替换原始链接即可<br>
->   二是页面中以"https://firebasestorage.googleapis.com/v0/b/"开头的，<br>
+>   二是页面中以 "https://firebasestorage.googleapis.com/v0/b/" 开头的，<br>
 >   此类图片是GitBook基于逻辑解析的，如果直接使用此链接访问，只会得到相应的JSON信息。
 >   经过研究发现，将firebasestorage.googleapis.com地址替换为blobscdn.gitbook.com后，
 >   再次访问则会直接返回页面，注意后面的参数要完整。<br>
@@ -38,4 +38,3 @@
 
 #### 本程序需要在可访问GitBook文档服务器上执行，执行后的文件配置域名本地访问即可。
 
-#####email: ohbugs@foxmail.com.cn
