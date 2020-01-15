@@ -19,6 +19,8 @@ docs_root = 'https://docs.gitbook.com/'
 docs_summary = 'https://docs.gitbook.com/master/SUMMARY.md'
 # 网站访问域名地址
 host = 'docs.test.com'
+# GitBook链接编码
+code = "xxxxx"
 
 '''
     加载站点地图，读取文档所有列表地址
@@ -55,7 +57,7 @@ def save_js_file(dir_path, file_name, file, url_regex):
                print('Saved {0}').format(file_path)
                os.makedirs(dir_path)
                with open(file_path, 'w') as f:
-                   url_file = re.sub(r"gitbook-xxxx.firebaseio.com", host, url_file)
+                   url_file = re.sub(r"gitbook-" + code + ".firebaseio.com", host, url_file)
                    f.write(url_file)
 
 '''
@@ -99,16 +101,16 @@ def save_to_file(file, path):
         # 清除链接 https://static.gitbook.com/js/111.XXXX.js
         file = re.sub(js_regex, "https://docs.gitbook.cn/" + js_dir_path + '/' + js_file_name + '?t=' + str(random.random()), file)
         # 将所有.lp地址直接设置为失效
-        file = re.sub("gitbook-xxxx.firebaseio.com", host, file)
+        file = re.sub("gitbook-" + code + ".firebaseio.com", host, file)
         # 缓存下载所有blobscdn.gitbook.com下的图片
-        rets = re.findall(r'https://blobscdn.gitbook.com/v0/b/gitbook-xxxx.appspot.com/o/[^ \f\n\r\t\v/]+\.png.*?(?=")', file)
+        rets = re.findall(r'https://blobscdn.gitbook.com/v0/b/gitbook-' + code + '.appspot.com/o/[^ \f\n\r\t\v/]+\.png.*?(?=")', file)
         for r in rets:
             img_name = download_img(r)
             if len(img_name) > 0:
                 r = r.split('?')[0]
                 file = re.sub(r, "https://" + host + "/" + img_name, file)
         # 缓存下载所有firebasestorage.googleapis.com下的图片
-        rets = re.findall(r'https://firebasestorage.googleapis.com/v0/b/gitbook-xxxx.appspot.com/o/[^ \f\n\r\t\v/]+\.png.*?(?=")', file)
+        rets = re.findall(r'https://firebasestorage.googleapis.com/v0/b/gitbook-' + code + '.appspot.com/o/[^ \f\n\r\t\v/]+\.png.*?(?=")', file)
         for r in rets:
             r2 = re.sub('firebasestorage.googleapis.com', 'blobscdn.gitbook.com', r)
             img_name = download_img(r2)
@@ -117,7 +119,7 @@ def save_to_file(file, path):
                 file = re.sub(r, "https://" + host + "/_imgs/" + img_name, file)
         # 替换错误的地址
         file = re.sub('/_imgs/_imgs', "/_imgs", file)
-	    # 直接打开而不走路由
+        # 直接打开而不走路由
         file = re.sub('<head>', '<head><script>window.addEventListener("click",function(e){var t=e.target.closest(\'a[class*="card"]\')||e.target.closest(\'a[class*="navButton"]\')||e.target.closest(\'a[class*="link"]\')||null;if(t!==null){window.location.href=t.href}},false); </script>', file)
         html.write(file)
     print('Saved {0}index.html').format(path)
