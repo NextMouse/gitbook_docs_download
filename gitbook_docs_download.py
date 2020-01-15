@@ -55,7 +55,7 @@ def save_js_file(dir_path, file_name, file, url_regex):
                print('Saved {0}').format(file_path)
                os.makedirs(dir_path)
                with open(file_path, 'w') as f:
-                   url_file = re.sub(r"gitbook-28427.firebaseio.com", host, url_file)
+                   url_file = re.sub(r"gitbook-xxxx.firebaseio.com", host, url_file)
                    f.write(url_file)
 
 '''
@@ -106,7 +106,7 @@ def save_to_file(file, path):
             img_name = download_img(r)
             if len(img_name) > 0:
                 r = r.split('?')[0]
-                file = re.sub(r, "https://docs.analysys.cn/" + img_name, file)
+                file = re.sub(r, "https://" + host + "/" + img_name, file)
         # 缓存下载所有firebasestorage.googleapis.com下的图片
         rets = re.findall(r'https://firebasestorage.googleapis.com/v0/b/gitbook-xxxx.appspot.com/o/[^ \f\n\r\t\v/]+\.png.*?(?=")', file)
         for r in rets:
@@ -118,7 +118,7 @@ def save_to_file(file, path):
         # 替换错误的地址
         file = re.sub('/_imgs/_imgs', "/_imgs", file)
 	    # 直接打开而不走路由
-	    file = re.sub('<head>', '<head><script>window.addEventListener("click",function(e){var t=e.target.closest(\'a[class*="card"]\')||e.target.closest(\'a[class*="navButton"]\')||e.target.closest(\'a[class*="link"]\')||null;if(t!==null){window.location.href=t.href}},false); </script>', file)
+        file = re.sub('<head>', '<head><script>window.addEventListener("click",function(e){var t=e.target.closest(\'a[class*="card"]\')||e.target.closest(\'a[class*="navButton"]\')||e.target.closest(\'a[class*="link"]\')||null;if(t!==null){window.location.href=t.href}},false); </script>', file)
         html.write(file)
     print('Saved {0}index.html').format(path)
 
