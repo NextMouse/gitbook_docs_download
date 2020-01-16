@@ -120,7 +120,8 @@ def save_to_file(file, path):
         # 替换错误的地址
         file = re.sub('/_imgs/_imgs', "/_imgs", file)
         # 直接打开而不走路由
-        file = re.sub('<head>', '<head><script>window.addEventListener("click",function(e){var t=e.target.closest(\'a[class*="card"]\')||e.target.closest(\'a[class*="navButton"]\')||e.target.closest(\'a[class*="link"]\')||null;if(t!==null){window.location.href=t.href}},false); </script>', file)
+        file = re.sub('<head>', '<head><script>window.addEventListener("click",function(e){var t=e.target.closest(\'a[class*="card"]\')||e.target.closest(\'a[class*="navButton"]\')||e.target.closest(\'a[class*="link"]\')||null;if(t!==null){window.location.href=t.href}},false); '
+         + 'var si = setInterval(function(){ var s = document.getElementsByClassName("reset-3c756112--wholePageSticky-f53dafd2"); if (s && s[0].style.display == "none") { clearInterval(si);  window.location.reload(); } }, 300);  </script>', file)
         html.write(file)
     print('Saved {0}index.html').format(path)
 
